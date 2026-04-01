@@ -1,0 +1,678 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>ПОВЕРХНОСТЬ | Столы из спеченного камня</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+            background: #f8f7f4;
+            color: #1e1e1e;
+            line-height: 1.4;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 2rem 1.5rem;
+        }
+
+        /* Header */
+        .header {
+            text-align: center;
+            margin-bottom: 3rem;
+            border-bottom: 2px solid #d4c9b6;
+            padding-bottom: 2rem;
+            position: relative;
+        }
+
+        .logo-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 1rem;
+            flex-wrap: wrap;
+            margin-bottom: 0.5rem;
+        }
+
+        .logo-img {
+            height: 70px;
+            width: auto;
+        }
+
+        .brand {
+            font-size: 2.5rem;
+            font-weight: 300;
+            margin: 0.5rem 0 0.2rem;
+        }
+
+        .brand strong {
+            font-weight: 700;
+            color: #b37b48;
+        }
+
+        .subhead {
+            color: #5a5a5a;
+            font-size: 1rem;
+            max-width: 700px;
+            margin: 0.8rem auto 0;
+        }
+
+        .badge {
+            display: inline-block;
+            background: #e9e2d4;
+            padding: 0.3rem 1rem;
+            border-radius: 40px;
+            font-size: 0.8rem;
+            margin-top: 1rem;
+        }
+
+        /* Кнопки в шапке */
+        .header-buttons {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            display: flex;
+            gap: 0.8rem;
+        }
+        .btn-pdf, .btn-max {
+            background: #b37b48;
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 40px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+            transition: 0.2s;
+        }
+        .btn-pdf:hover, .btn-max:hover {
+            background: #8b5a3a;
+        }
+        .btn-max {
+            background: #8e44ad;
+        }
+        .btn-max:hover {
+            background: #bf8fdc;
+        }
+
+        /* Уровни исполнения */
+        .levels {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 1.5rem;
+            margin: 2rem 0 3rem;
+        }
+
+        .level-card {
+            background: white;
+            border-radius: 24px;
+            padding: 1rem 1.8rem;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+            text-align: center;
+            flex: 1;
+            min-width: 160px;
+            border: 1px solid #e0d6ca;
+        }
+
+        .level-title {
+            font-weight: 800;
+            font-size: 1.3rem;
+            letter-spacing: 1px;
+        }
+
+        .level-desc {
+            font-size: 0.85rem;
+            color: #5e5e5e;
+            margin-top: 0.3rem;
+        }
+
+        .standard { color: #2c5f2d; }
+        .premium { color: #b37b48; }
+        .ultimate { color: #8b6b4d; }
+
+        /* Сетка товаров */
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+
+        .product-card {
+            background: white;
+            border-radius: 28px;
+            overflow: hidden;
+            box-shadow: 0 12px 28px rgba(0,0,0,0.08);
+            transition: all 0.25s ease;
+            border: 1px solid #ece3d8;
+        }
+
+        .product-card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 20px 32px rgba(0,0,0,0.12);
+        }
+
+        .product-image {
+            width: 100%;
+            height: 240px;
+            overflow: hidden;
+            background: #f0ebe2;
+            cursor: pointer;
+        }
+
+        .product-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+            display: block;
+        }
+
+        .product-card:hover .product-image img {
+            transform: scale(1.03);
+        }
+
+        .product-header {
+            background: #f2ede5;
+            padding: 1.2rem 1.5rem 0.8rem;
+        }
+
+        .product-name {
+            font-size: 1.8rem;
+            font-weight: 700;
+            letter-spacing: -0.3px;
+            color: #2e241f;
+            margin-bottom: 0.2rem;
+        }
+
+        .product-sub {
+            font-size: 0.8rem;
+            color: #7a6a5c;
+            text-transform: uppercase;
+            font-weight: 500;
+        }
+
+        .product-desc {
+            padding: 1rem 1.5rem 0;
+            font-size: 0.9rem;
+            color: #4a3e36;
+            border-bottom: 1px solid #ede5db;
+        }
+
+        .prices {
+            padding: 1rem 1.5rem 0.5rem;
+        }
+
+        .price-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            padding: 0.4rem 0;
+            border-bottom: 1px dashed #e9e0d4;
+            font-size: 0.9rem;
+        }
+
+        .price-row:last-child {
+            border-bottom: none;
+        }
+
+        .price-type {
+            font-weight: 500;
+            color: #5b4b3c;
+        }
+
+        .price-value {
+            font-weight: 800;
+            font-size: 1.1rem;
+            color: #2c3e2b;
+        }
+
+        .price-note {
+            font-size: 0.7rem;
+            color: #8e7a68;
+            margin-top: 0.5rem;
+            text-align: right;
+        }
+
+        .level-note {
+            background: #faf6ef;
+            padding: 0.5rem 1rem;
+            margin: 0.5rem 1.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.7rem;
+            color: #b37b48;
+            text-align: center;
+            font-weight: 500;
+            border: 1px solid #e9e0d4;
+        }
+
+        .availability {
+            background: #faf8f4;
+            padding: 0.6rem 1.5rem;
+            font-size: 0.75rem;
+            color: #4f6b3c;
+            border-top: 1px solid #ede5db;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        /* Блок текстур */
+        .textures-section {
+            margin: 4rem 0 2rem;
+        }
+
+        .textures-title {
+            font-size: 1.8rem;
+            font-weight: 500;
+            text-align: center;
+            margin-bottom: 2rem;
+            color: #2e241f;
+        }
+
+        .textures-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            gap: 1rem;
+        }
+
+        .texture-item {
+            background: white;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+            transition: transform 0.2s;
+            cursor: pointer;
+            text-align: center;
+            border: 1px solid #e0d6ca;
+        }
+
+        .texture-item:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 18px rgba(0,0,0,0.1);
+        }
+
+        .texture-img {
+            width: 100%;
+            aspect-ratio: 1 / 1;
+            object-fit: cover;
+            display: block;
+        }
+
+        .texture-name {
+            padding: 0.5rem;
+            font-size: 0.8rem;
+            font-weight: 500;
+            color: #5b4b3c;
+            background: #faf8f4;
+        }
+
+        .footer-link {
+            text-align: center;
+            margin: 4rem 0 2rem;
+            font-size: 1.2rem;
+        }
+
+        .footer-link a {
+            color: #b37b48;
+            text-decoration: none;
+            font-weight: 700;
+            border-bottom: 2px solid #e1c9b4;
+            transition: 0.2s;
+        }
+
+        .footer-link a:hover {
+            border-bottom-color: #b37b48;
+            color: #7a5a4b;
+        }
+
+        .contact-info {
+            background: #e9e2d4;
+            border-radius: 40px;
+            padding: 1.2rem 2rem;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 2rem;
+            font-size: 0.85rem;
+        }
+
+        /* Кнопки в подвале */
+        .footer-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+        .footer-buttons .btn-pdf, .footer-buttons .btn-max {
+            font-size: 0.9rem;
+            padding: 0.6rem 1.2rem;
+        }
+
+        /* Плавающая кнопка MAX */
+        .floating-max {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            z-index: 999;
+            background:  #9b59b6;
+            color: white;
+            border: none;
+            padding: 0.8rem 1.2rem;
+            border-radius: 50px;
+            font-size: 1rem;
+            font-weight: bold;
+            cursor: pointer;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+            transition: 0.2s;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .floating-max:hover {
+            background: #9b59b6;
+            transform: scale(1.02);
+        }
+
+        /* Модальное окно */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.9);
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+        }
+        .modal img {
+            max-width: 90%;
+            max-height: 90%;
+            object-fit: contain;
+            border-radius: 8px;
+            box-shadow: 0 0 20px rgba(0,0,0,0.5);
+        }
+        .modal-close {
+            position: absolute;
+            top: 20px;
+            right: 35px;
+            color: #fff;
+            font-size: 40px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+        .modal-close:hover {
+            color: #bbb;
+        }
+
+        /* Стили для печати (чтобы PDF был чистым) */
+        @media print {
+            .btn-pdf, .btn-max, .floating-max, .header-buttons, .footer-buttons, .modal {
+                display: none !important;
+            }
+            body {
+                background: white;
+            }
+            .container {
+                padding: 0;
+            }
+            .product-card {
+                break-inside: avoid;
+                page-break-inside: avoid;
+            }
+        }
+
+        @media (max-width: 760px) {
+            .container {
+                padding: 1rem;
+            }
+            .products-grid {
+                grid-template-columns: 1fr;
+            }
+            .product-name {
+                font-size: 1.5rem;
+            }
+            .levels {
+                flex-direction: column;
+                align-items: stretch;
+            }
+            .product-image {
+                height: 200px;
+            }
+            .textures-grid {
+                grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+            }
+            .contact-info {
+                flex-direction: column;
+                gap: 0.5rem;
+                text-align: center;
+            }
+            .header-buttons {
+                position: static;
+                justify-content: center;
+                margin-bottom: 1rem;
+            }
+            .floating-max {
+                bottom: 1rem;
+                right: 1rem;
+                padding: 0.6rem 1rem;
+                font-size: 0.8rem;
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="header">
+        <div class="header-buttons">
+            <button class="btn-pdf" id="printPdfBtn">📄 Скачать PDF</button>
+        </div>
+        <div class="logo-container">
+            <img src="https://i.ibb.co/jvQvhDL5/image002.png" alt="ПОВЕРХНОСТЬ" class="logo-img">
+        </div>
+        <div class="brand"><strong>ПОВЕРХНОСТЬ</strong> | СТОЛЫ ИЗ СПЕЧЕННОГО КАМНЯ</div>
+        <div class="subhead">
+            Премиальная мебель для современного интерьера. Три технологии столешниц: фрезерованный МДФ, композитные решения из стекла и монолитный камень 3/6/12 мм.<br>
+            Абсолютная устойчивость к царапинам, термошоку и химическим веществам.
+        </div>
+        <div class="badge">13 МОДЕЛЕЙ • 3 ТЕХНОЛОГИИ • 50+ ТЕКСТУР КАМНЯ</div>
+    </div>
+
+    <!-- Три уровня исполнения -->
+    <div class="levels">
+        <div class="level-card"><div class="level-title standard">STANDARD</div><div class="level-desc">Керамогранит 6/3 мм + МДФ подложка</div></div>
+        <div class="level-card"><div class="level-title premium">PREMIUM</div><div class="level-desc">Фрезеровка МДФ на глубину камня / монолит 12 мм</div></div>
+        <div class="level-card"><div class="level-title ultimate">ULTIMATE</div><div class="level-desc">10 мм каленое стекло + керамика снизу</div></div>
+    </div>
+
+    <!-- Сетка продуктов -->
+    <div class="products-grid" id="productsGrid"></div>
+
+    <!-- Блок текстур -->
+    <div class="textures-section">
+        <div class="textures-title">Палитра текстур камня</div>
+        <div class="textures-grid" id="texturesGrid"></div>
+    </div>
+
+    <!-- Условия поставки и контакты -->
+    <div style="margin: 2rem 0; background: #fff6ed; border-radius: 32px; padding: 1.8rem;">
+        <div style="display: flex; flex-wrap: wrap; gap: 2rem; justify-content: space-between;">
+            <div><strong>🎨 ЦВЕТОВЫЕ РЕШЕНИЯ</strong><br>50+ вариантов, индивидуальный подбор.</div>
+            <div><strong>📐 НЕСТАНДАРТНЫЕ РАЗМЕРЫ</strong><br>Изготовление по вашим чертежам.</div>
+            <div><strong>🔄 СИСТЕМЫ РАЗДВИЖЕНИЯ</strong><br>Трансформеры по индивидуальному проекту.</div>
+            <div><strong>⏱ ГАРАНТИЯ</strong><br>5 лет на износостойкость камня • 24 месяца на конструкцию</div>
+        </div>
+    </div>
+
+    <div class="contact-info">
+        <span>📞 +7 (983) 700-49-29</span>
+        <span>✉️ kafelgranit@bk.ru</span>
+        <span>📍 Красноярск, производство 600 м²</span>
+        <span>📱 @kafelgranit124</span>
+    </div>
+
+    <div class="footer-buttons">
+        <button class="btn-pdf" id="printPdfBtnFooter">📄 Скачать PDF (POVERKHNOST.pdf)</button>
+        <a href="https://max.ru/u/f9LHodD0cOJmk2dW_hWT9BEkehCZyTFZ1XpPnF_d_w3qKGptR61aFvp6NQo" target="_blank" rel="noopener noreferrer" class="btn-max">💬 Написать в MAX</a>
+    </div>
+
+    <div class="footer-link">
+        <a href="https://кафельгранит124.рф/" target="_blank" rel="noopener noreferrer">ПОВЕРХНОСТЬ — каменная эстетика</a>
+    </div>
+    <div style="text-align: center; font-size: 0.7rem; margin-top: 1.5rem; color: #aa9c8a;">
+        Индивидуальный расчёт • Консультация дизайнера • B2B и дилерские условия
+    </div>
+</div>
+
+<!-- Плавающая кнопка MAX -->
+<a href="https://max.ru/u/f9LHodD0cOJmk2dW_hWT9BEkehCZyTFZ1XpPnF_d_w3qKGptR61aFvp6NQo" target="_blank" rel="noopener noreferrer" class="floating-max">💬 Написать в MAX</a>
+
+<!-- Модальное окно -->
+<div id="imageModal" class="modal" onclick="closeModal()">
+    <span class="modal-close" onclick="closeModal()">&times;</span>
+    <img id="modalImage" src="" alt="Полноэкранное изображение">
+</div>
+
+<script>
+    // Данные о столах
+    const products = [
+        { name: "ЕНИСЕЙ", sub: "Лаконичность • Стальное основание 6 мм", desc: "Размеры: 1600×800 / 2000×950", prices: { retail: "110 500 ₽", b2b: "78 000 ₽", opt: "66 400 ₽", note: "*для 2000×950: 150 000 / 103 000 / 89 000 ₽" }, img: "https://i.ibb.co/v6fwg7MY/1766750357776.png", availability: "В наличии / под заказ 2-3 нед" },
+        { name: "БИРЮСА", sub: "Элегантность • Радиусные опоры из МДФ", desc: "Размеры: 1400×800 / 1600×950", prices: { retail: "150 000 ₽", b2b: "107 000 ₽", opt: "92 000 ₽", note: "*для 1600×950: 155 000 / 111 000 / 95 000 ₽" }, img: "https://i.ibb.co/xtCLKjXb/1766752031615.png", availability: "Под заказ 2-3 нед" },
+        { name: "ОБЬ", sub: "Гармония • Круг на рифлёном подстолье", desc: "Диаметр: 800 мм / 1000 мм", prices: { retail: "119 000 ₽", b2b: "83 000 ₽", opt: "70 000 ₽", note: "*D1000: 120 000 / 86 000 / 72 000 ₽" }, img: "https://i.ibb.co/Xxckk9Gg/trashed-1769343557-1766750665022.png", availability: "Только фиксированные размеры, под заказ" },
+        { name: "ЛЕНА", sub: "Характер • Стальной профиль 40×80 мм", desc: "Размеры: 1600×800 / 2000×950", prices: { retail: "94 000 ₽", b2b: "66 000 ₽", opt: "56 000 ₽", note: "*2000×950: 140 000 / 99 000 / 85 000 ₽" }, img: "https://i.ibb.co/Rk0G6rRp/1766750357776.png", availability: "Под заказ 2-3 нед" },
+        { name: "КАТУНЬ", sub: "Архитектура • Сложное переплетение опор", desc: "Размеры: 1800×900 / 2200×1000", prices: { retail: "110 500 ₽", b2b: "78 000 ₽", opt: "66 400 ₽", note: "*2200×1000: 150 000 / 103 000 / 89 000 ₽" }, img: "https://i.ibb.co/qFnvzzH4/1766751509816.png", availability: "Динамичный дизайн, металл 6 мм" },
+        { name: "ТУНГУСКА", sub: "Минимализм • Легкая и прочная модель", desc: "Размеры: 1400×800 / 1600×800", prices: { retail: "110 500 ₽", b2b: "78 000 ₽", opt: "66 400 ₽", note: "*доп. размеры по запросу" }, img: "https://i.ibb.co/xtRyXHcw/1766749830510.png", availability: "Под заказ 2-3 недели" },
+        { name: "ИРТЫШ", sub: "Плавность • Форма Soft Rectangle", desc: "Размеры: 1800×900 / 2000×950", prices: { retail: "110 500 ₽", b2b: "78 000 ₽", opt: "66 400 ₽", note: "*2000×950: 150 000 / 103 000 / 89 000 ₽" }, img: "https://i.ibb.co/vxp2jCDh/1764734562282.png", availability: "Плавные изгибы прочности" },
+        { name: "АМУР", sub: "Воздух • Эффект парения столешницы", desc: "Размеры: 1600×800 / 1800×900", prices: { retail: "110 500 ₽", b2b: "78 000 ₽", opt: "66 400 ₽", note: "*2000×950: 150 000 / 103 000 / 89 000 ₽" }, img: "https://i.ibb.co/NdbPLWDF/1766749360879.png", availability: "Закаленное стекло, лёгкость конструкции" },
+        { name: "МАНА", sub: "Монолит • Статус и архитектурные формы", desc: "Размеры: 2000×1000 / 2400×1100", prices: { retail: "94 000 ₽", b2b: "66 000 ₽", opt: "56 000 ₽", note: "*для 2400×1100 цены уточняйте" }, img: "https://i.ibb.co/Rk0G6rRp/1766751192867.png", availability: "Итальянская элегантность" },
+        { name: "БАРГУЗИН", sub: "Баланс • Универсальный прямоугольник", desc: "Размеры: 1500×1500 / 1800×900", prices: { retail: "110 500 ₽", b2b: "78 000 ₽", opt: "66 400 ₽", note: "*2000×950: 150 000 / 103 000 / 89 000 ₽" }, img: "https://i.ibb.co/7tSbvzmr/1000286851.png", availability: "Классическая итальянская роскошь" },
+        { name: "БАЙКАЛ", sub: "Модерн • Синтез дерева и камня", desc: "Размеры: 1600×900 / 2000×1000", prices: { retail: "117 000 ₽", b2b: "78 000 ₽", opt: "66 400 ₽", note: "*2000×1000: 160 000 / 103 000 / 89 000 ₽" }, img: "https://i.ibb.co/fzFMbfPB/1766751246152.png", availability: "Сдержанная роскошь современности" },
+        { name: "АНГАРА", sub: "Эстетика • Глубокие темные фактуры", desc: "Размеры: 1600×800 / 2000×950", prices: { retail: "130 500 ₽", b2b: "85 000 ₽", opt: "77 400 ₽", note: "*2000×950: 160 000 / 113 000 / 98 000 ₽" }, img: "https://i.ibb.co/x8tLS6nf/1764502015233.png", availability: "Величие форм и материалов" },
+        { name: "БИЯ", sub: "Функционал • Базовая модель мануфактуры", desc: "Размеры: 1400×800 / 1600×800", prices: { retail: "110 500 ₽", b2b: "78 000 ₽", opt: "66 400 ₽", note: "*другие размеры под заказ" }, img: "https://i.ibb.co/RdkGgwd/1766749687363.png", availability: "Широкий выбор" }
+    ];
+
+    const productsGrid = document.getElementById('productsGrid');
+    products.forEach(p => {
+        const card = document.createElement('div');
+        card.className = 'product-card';
+        card.innerHTML = `
+            <div class="product-image" data-full="${p.img}">
+                <img src="${p.img}" alt="Стол ${p.name}" loading="lazy">
+            </div>
+            <div class="product-header">
+                <div class="product-name">${p.name}</div>
+                <div class="product-sub">${p.sub}</div>
+            </div>
+            <div class="product-desc">${p.desc}</div>
+            <div class="prices">
+                <div class="price-row"><span class="price-type">Розница</span><span class="price-value">${p.prices.retail}</span></div>
+                <div class="price-row"><span class="price-type">B2B</span><span class="price-value">${p.prices.b2b}</span></div>
+                <div class="price-row"><span class="price-type">Опт (от 5 шт)</span><span class="price-value">${p.prices.opt}</span></div>
+                <div class="price-note">${p.prices.note}</div>
+            </div>
+            <div class="level-note">💎 Базовый уровень STANDART (керамогранит + МДФ). Premium +15–20%, Ultimate +25–30%</div>
+            <div class="availability">${p.availability} • +15–30% Premium/Ultimate</div>
+        `;
+        productsGrid.appendChild(card);
+    });
+
+    // Массив текстур
+    const textures = [
+        { name: "PANDORA", url: "https://delfone.ru/image/P/PANDORA--Treasure_18035_6_7.jpg" },
+        { name: "COLUMBIA", url: "https://delfone.ru/image/C/COLUMBIA-EMERALD--Treasure_18023_6_7.jpg" },
+        { name: "VERSACE", url: "https://delfone.ru/image/V/VERSACE-SENIOR-BLACK--Treasure_18083_6_7.jpg" },
+        { name: "AMBILIGHT", url: "https://delfone.ru/image/A/AMBILIGHT--Treasure_18098_6_7.jpg" },
+        { name: "MARTHA-BROWN", url: "https://delfone.ru/image/M/MARTHA-BROWN--Titanium_18242_6_7.jpg" },
+        { name: "TITANIUM-SILVERY", url: "https://delfone.ru/image/T/TITANIUM-SILVERY-GREY--Titanium_18218_6_7.jpg" },
+        { name: "ARARAT", url: "https://delfone.ru/image/A/ARARAT-LIGHTNING-BLACK--Diamond_18114_6_7.jpg" },
+        { name: "ROMAN-NIELLO", url: "https://delfone.ru/image/R/ROMAN-NIELLO--Diamond_18118_6_7.jpg" },
+        { name: "ARABESCATO", url: "https://delfone.ru/image/S/SUPER-ARABESCATO-CORCHIA--Diamond_18106_6_7.jpg" },
+        { name: "SHAKESPEARE", url: "https://delfone.ru/image/S/SHAKESPEARE-SENIOR-GREY--Diamond_18134_6_7.jpg" },
+        { name: "BLACK-AURORA", url: "https://delfone.ru/image/B/BLACK-AURORA--Diamond_18150_6_7.jpg" },
+        { name: "GILT-YEARS", url: "https://delfone.ru/image/G/GILT-YEARS--Classic-Marble_17927_6_7.jpg" },
+        { name: "TUSCANY", url: "https://delfone.ru/image/T/TUSCANY-GOLD--Classic-Marble_18391_6_7.jpg" },
+        { name: "LAURENT", url: "https://delfone.ru/image/L/LAURENT-GILDED-WHITE--Classic-Marble_18449_6_7.jpg" },
+        { name: "BOSNIA-GREY", url: "https://delfone.ru/image/B/BOSNIA-GREY--Classic-Marble_18480_6_7.jpg" },
+        { name: "SLATEBLUE", url: "https://delfone.ru/image/S/SLATEBLUE--Classic-Marble_18491_6_7.jpg" },
+        { name: "BULGARI", url: "https://delfone.ru/image/B/BULGARI-PURPLE--Classic-Marble_18990_6_7.jpg" },
+        { name: "SHAKESPEARE-THIN", url: "https://delfone.ru/image/S/SHAKESPEARE-THIN-LINE--Classic-Marble_19105_6_7.jpg" },
+        { name: "SEVILLE", url: "https://delfone.ru/image/S/SEVILLE--Classic-Marble_19093_6_7.jpg" },
+        { name: "OAK-DARK-GREY", url: "https://delfone.ru/image/O/OAK-DARK-GREY--Luxury-Wood_19085_6_7.jpg" },
+        { name: "ITALIAN-BLACK", url: "https://delfone.ru/image/I/ITALIAN-BLACK-WALNUT--Luxury-Wood_18015_6_7.jpg" },
+        { name: "GENTLEMAN-GREY", url: "https://delfone.ru/image/G/GENTLEMAN-GREY--Pure-Colour_18269_6_7.jpg" }
+    ];
+
+    const texturesGrid = document.getElementById('texturesGrid');
+    textures.forEach(t => {
+        const div = document.createElement('div');
+        div.className = 'texture-item';
+        div.setAttribute('data-full', t.url);
+        div.innerHTML = `
+            <img class="texture-img" src="${t.url}" alt="${t.name}" loading="lazy">
+            <div class="texture-name">${t.name}</div>
+        `;
+        div.addEventListener('click', (e) => {
+            e.stopPropagation();
+            openModal(t.url);
+        });
+        texturesGrid.appendChild(div);
+    });
+
+    // Модальное окно
+    const modal = document.getElementById('imageModal');
+    const modalImg = document.getElementById('modalImage');
+
+    function openModal(src) {
+        modal.style.display = 'flex';
+        modalImg.src = src;
+    }
+
+    function closeModal() {
+        modal.style.display = 'none';
+        modalImg.src = '';
+    }
+
+    // Кликабельные изображения столов (динамически добавленные)
+    document.addEventListener('click', (e) => {
+        const target = e.target.closest('.product-image');
+        if (target && target.getAttribute('data-full')) {
+            e.stopPropagation();
+            openModal(target.getAttribute('data-full'));
+        }
+    });
+
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && modal.style.display === 'flex') {
+            closeModal();
+        }
+    });
+
+    // Функция для печати (сохранения PDF)
+    function printPDF() {
+        window.print();
+    }
+
+    // Назначаем обработчики на все кнопки PDF
+    const printButtons = document.querySelectorAll('#printPdfBtn, #printPdfBtnFooter');
+    printButtons.forEach(btn => {
+        btn.addEventListener('click', printPDF);
+    });
+</script>
+</body>
+</html>
