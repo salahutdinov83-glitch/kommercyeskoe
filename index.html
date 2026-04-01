@@ -82,7 +82,7 @@
             display: flex;
             gap: 0.8rem;
         }
-        .btn-pdf, .btn-max {
+        .btn-pdf {
             background: #b37b48;
             color: white;
             border: none;
@@ -95,14 +95,8 @@
             display: inline-block;
             transition: 0.2s;
         }
-        .btn-pdf:hover, .btn-max:hover {
+        .btn-pdf:hover {
             background: #8b5a3a;
-        }
-        .btn-max {
-            background: #8e44ad;
-        }
-        .btn-max:hover {
-            background: #bf8fdc;
         }
 
         /* Уровни исполнения */
@@ -317,9 +311,37 @@
             background: #faf8f4;
         }
 
+        /* Кнопки в подвале */
+        .footer-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin: 1.5rem 0 1rem;
+        }
+        .btn-max {
+            background: #9b59b6;  /* фиолетовый */
+            color: white;
+            border: none;
+            padding: 0.6rem 1.2rem;
+            border-radius: 40px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+            transition: 0.2s;
+        }
+        .btn-max:hover {
+            background: #8e44ad;
+        }
+        .footer-buttons .btn-pdf {
+            font-size: 0.9rem;
+            padding: 0.6rem 1.2rem;
+        }
+
         .footer-link {
             text-align: center;
-            margin: 4rem 0 2rem;
+            margin: 2rem 0 2rem;
             font-size: 1.2rem;
         }
 
@@ -348,25 +370,13 @@
             font-size: 0.85rem;
         }
 
-        /* Кнопки в подвале */
-        .footer-buttons {
-            display: flex;
-            justify-content: center;
-            gap: 1rem;
-            margin-top: 1.5rem;
-        }
-        .footer-buttons .btn-pdf, .footer-buttons .btn-max {
-            font-size: 0.9rem;
-            padding: 0.6rem 1.2rem;
-        }
-
         /* Плавающая кнопка MAX */
         .floating-max {
             position: fixed;
             bottom: 2rem;
             right: 2rem;
             z-index: 999;
-            background:  #9b59b6;
+            background: #9b59b6;
             color: white;
             border: none;
             padding: 0.8rem 1.2rem;
@@ -382,7 +392,7 @@
             gap: 0.5rem;
         }
         .floating-max:hover {
-            background: #9b59b6;
+            background: #8e44ad;
             transform: scale(1.02);
         }
 
@@ -421,7 +431,7 @@
             color: #bbb;
         }
 
-        /* Стили для печати (чтобы PDF был чистым) */
+        /* Стили для печати (не мешают скачиванию PDF) */
         @media print {
             .btn-pdf, .btn-max, .floating-max, .header-buttons, .footer-buttons, .modal {
                 display: none !important;
@@ -501,7 +511,7 @@
         <div class="level-card"><div class="level-title ultimate">ULTIMATE</div><div class="level-desc">10 мм каленое стекло + керамика снизу</div></div>
     </div>
 
-    <!-- Сетка продуктов -->
+    <!-- Сетка продуктов (заполняется скриптом) -->
     <div class="products-grid" id="productsGrid"></div>
 
     <!-- Блок текстур -->
@@ -648,7 +658,7 @@
         modalImg.src = '';
     }
 
-    // Кликабельные изображения столов (динамически добавленные)
+    // Кликабельные изображения столов
     document.addEventListener('click', (e) => {
         const target = e.target.closest('.product-image');
         if (target && target.getAttribute('data-full')) {
@@ -663,15 +673,23 @@
         }
     });
 
-    // Функция для печати (сохранения PDF)
-    function printPDF() {
-        window.print();
+    // Функция скачивания PDF
+    function downloadPDF() {
+        // Укажите корректный путь к файлу POVERKHNOST.pdf в папке репозитория
+        // По умолчанию предполагается, что файл лежит рядом с HTML
+        const pdfUrl = 'POVERKHNOST.pdf';
+        const link = document.createElement('a');
+        link.href = pdfUrl;
+        link.download = 'POVERKHNOST.pdf';
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
     }
 
-    // Назначаем обработчики на все кнопки PDF
-    const printButtons = document.querySelectorAll('#printPdfBtn, #printPdfBtnFooter');
-    printButtons.forEach(btn => {
-        btn.addEventListener('click', printPDF);
+    // Назначаем обработчики на кнопки PDF
+    const pdfButtons = document.querySelectorAll('#printPdfBtn, #printPdfBtnFooter');
+    pdfButtons.forEach(btn => {
+        btn.addEventListener('click', downloadPDF);
     });
 </script>
 </body>
